@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ders Ekle</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container mt-5">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary mb-3">Geri Dön</a>
+
+        <h1>Ders Ekle</h1>
+        <form method="POST" class="mb-4">
+            <div class="mb-3">
+                <label for="ders_adı" class="form-label">Ders Adı</label>
+                <input type="text" class="form-control" id="ders_adı" name="ders_adı" required>
+            </div>
+            <div class="mb-3">
+                <label for="ders_kodu" class="form-label">Ders Kodu</label>
+                <input type="text" class="form-control" id="ders_kodu" name="ders_kodu" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Ders Ekle</button>
+        </form>
+
+        <h2 class="mt-5">Ders Seçim Menüsü</h2>
+        <form method="POST" action="{{ url_for('ders_sec') }}">
+            <div class="mb-3">
+                <label for="secilen_ders" class="form-label">Mevcut Dersler</label>
+                <select class="form-select" id="secilen_ders" name="secilen_ders" required>
+                    {% for ders in dersler %}
+                        <option value="{{ ders['Ders Kodu'] }}">{{ ders['Ders Adı'] }} ({{ ders['Ders Kodu'] }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success">Ders Seç</button>
+        </form>
+
+        <h2 class="mt-5">Ders Listesi</h2>
+        <ul class="list-group">
+            {% for ders in dersler %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ ders['Ders Adı'] }} - {{ ders['Ders Kodu'] }}
+                    <form method="POST" action="{{ url_for('ders_sil', ders_index=loop.index0) }}">
+                        <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

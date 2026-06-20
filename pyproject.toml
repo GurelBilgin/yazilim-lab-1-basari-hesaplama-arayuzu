@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "basari-hesaplama-arayuzu"
+version = "1.0.0"
+description = "Flask tabanlı başarı hesaplama ve ders çıktısı yönetim arayüzü"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "Flask>=3.0",
+    "pandas>=2.0",
+    "openpyxl>=3.1",
+    "xlsxwriter>=3.1"
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+basari-hesaplama-arayuzu = "basari_hesaplama_arayuzu.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+basari_hesaplama_arayuzu = ["templates/*.html", "static/css/*.css"]
